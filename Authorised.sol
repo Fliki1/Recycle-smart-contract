@@ -18,10 +18,10 @@ contract Authorised is Ownable{
   }
 
     /**
-   * @return true if `address` is the owner of the contract.
-   * @dev da renderlo onlyAuthorised una volta fatto un primo test di controllo
+     @notice funzione onlyOwner per verificare se add è autorizzato
+   * @return 1 if `add` è un address autorizzato
    */
-  function isAuthorised(address add) external view onlyAuthorised(add) returns(uint) {
+  function isAuthorised(address add) external view onlyOwner returns(uint) {
     return authorisedAddress[add];
   }
   
