@@ -1,9 +1,9 @@
-//pragma solidity ^0.6.6;
-import "./Ownable.sol";
 /**
  * @title Authorised
  * @dev The Authorised contract mantain the user/citizen address able to use the Recycle smart contract
  */
+import "./Ownable.sol";
+
 contract Authorised is Ownable{
 
   event NewAuthorisedAddress(address newAddress);

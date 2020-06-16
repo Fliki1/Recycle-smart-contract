@@ -1,4 +1,3 @@
-//pragma solidity ^0.6.6;
 /**
  * @title Ownable
  * @dev The Ownable contract has an owner address, and provides basic authorization control

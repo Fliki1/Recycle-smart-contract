@@ -59,22 +59,6 @@ contract Recycle is Authorised{
         return bags.length;
     }
     
-    // @notice controllo bag a partire dal qrcode ---usando un for
-    // @parameter qrcheck: qrcode di cui si vuole sapere i suoi riferimenti
-    // @return gli elementi che compongono la sua smart bag
-    // @dev inutile meglio il formato mapp poco sotto
-    function checkBagByQR_FOR(string calldata qrcheck) external view returns (string memory, string memory, uint32, string memory){
-        require(bags.length > 0, "Il qrcode non è stato trattato"); // controlliamo se bags non sia vuoto prima
-
-        for (uint i = 0; i < bags.length; i++ ) {
-            if(keccak256(abi.encodePacked((qrcheck))) == keccak256(abi.encodePacked((bags[i].qrcode)))){
-                return (bags[i].qrcode, bags[i].timestamp, bags[i].time, bags[i].recyType);
-            }
-        }
-        return ("no_qrcode","no_timestamp",0,"no_recyle"); // se non presente
-    }
-
-
     // @notice controllo bag a partire dal qrcode ---usando il mapping
     // @parameter qrcheck: qrcode di cui si vuole sapere i suoi riferimenti
     // @return gli elementi che compongono la sua smart bag
