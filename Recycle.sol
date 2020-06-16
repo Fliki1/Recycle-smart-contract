@@ -46,7 +46,7 @@ contract Recycle is Authorised{
     // @parameter _qrcode: il qrcode scannerizzato
     // @parameter _timestamp: timestamp
     // @parameter _recyType: il tipo di recycle
-    function generateBag(string memory _qrcode, string memory _timestamp, string memory _recyType) public onlyAuthorised{
+    function generateBag(string memory _qrcode, string memory _timestamp, string memory _recyType) public onlyAuthorised(msg.sender){
         // require che l'address sia di quelli a me consoni
         //require(ownerZombieCount[msg.sender] == 0);
         //uint randDna = _generateRandomDna(_name);
@@ -55,7 +55,7 @@ contract Recycle is Authorised{
     }
     
     // @notice Ritorna il numero di bags generati fino ad ora (universali)
-    function queryBagsLength() external view returns (uint) onlyOwner{
+    function queryBagsLength() external view onlyOwner returns (uint) {
         return bags.length;
     }
     
@@ -78,7 +78,7 @@ contract Recycle is Authorised{
     // @notice controllo bag a partire dal qrcode ---usando il mapping
     // @parameter qrcheck: qrcode di cui si vuole sapere i suoi riferimenti
     // @return gli elementi che compongono la sua smart bag
-    function checkBagByQR_MAP(string calldata qrcheck) external view returns (string memory, string memory, uint32, string memory) onlyAuthorised{
+    function checkBagByQR_MAP(string calldata qrcheck) external view onlyAuthorised(msg.sender) returns (string memory, string memory, uint32, string memory) {
         require (qrcodeToBag[qrcheck] != 0, 'Il qrcode non è stato trattato');
         uint i = qrcodeToBag[qrcheck] -1;
         return (bags[i].qrcode, bags[i].timestamp, bags[i].time, bags[i].recyType);

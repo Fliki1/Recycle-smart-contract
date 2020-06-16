@@ -1,3 +1,4 @@
+//pragma solidity ^0.6.6;
 import "./Ownable.sol";
 /**
  * @title Authorised
@@ -18,8 +19,9 @@ contract Authorised is Ownable{
 
     /**
    * @return true if `address` is the owner of the contract.
+   * @dev da renderlo onlyAuthorised una volta fatto un primo test di controllo
    */
-  function isAuthorised(address add) external view returns(uint) {
+  function isAuthorised(address add) external view onlyAuthorised(add) returns(uint) {
     return authorisedAddress[add];
   }
   
@@ -30,7 +32,7 @@ contract Authorised is Ownable{
   }
 
 
-  function newAuthorised (address newAddress) private onlyOwner{
+  function newAuthorised (address newAddress) public onlyOwner{
     authorisedAddress[newAddress] = 1;
     emit NewAuthorisedAddress(newAddress);
   }
