@@ -1,5 +1,3 @@
-
-
 import "./Ownable.sol";
 /**
  * @title Authorised
@@ -36,9 +34,4 @@ contract Authorised is Ownable{
     authorisedAddress[newAddress] = 1;
     emit NewAuthorisedAddress(newAddress);
   }
-  
-
-
-
-
 }

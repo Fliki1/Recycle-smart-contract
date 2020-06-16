@@ -11,10 +11,6 @@ contract Recycle is Authorised{
     
     event NewBagTransaction(string qrcode, string timestamp, string recyType);
     event  DelBagTransaction(string qrcode, uint index, uint bags_lenght);
-    
-    
-    // @dev adress di chi può invocare la self descrut da sistemare e rendere privato con una Ownable contract
-    //address payable owner;
 
     // @dev mapping che parte da 1, lo 0 è usato per indicare 'qr code non presente'. L'indice corrispettivo in bags è -1
     mapping (string => uint256) private qrcodeToBag;
@@ -50,7 +46,7 @@ contract Recycle is Authorised{
     // @parameter _qrcode: il qrcode scannerizzato
     // @parameter _timestamp: timestamp
     // @parameter _recyType: il tipo di recycle
-    function generateBag(string memory _qrcode, string memory _timestamp, string memory _recyType) public {
+    function generateBag(string memory _qrcode, string memory _timestamp, string memory _recyType) public onlyAuthorised{
         // require che l'address sia di quelli a me consoni
         //require(ownerZombieCount[msg.sender] == 0);
         //uint randDna = _generateRandomDna(_name);
@@ -59,7 +55,7 @@ contract Recycle is Authorised{
     }
     
     // @notice Ritorna il numero di bags generati fino ad ora (universali)
-    function queryBagsLength() external view returns (uint){
+    function queryBagsLength() external view returns (uint) onlyOwner{
         return bags.length;
     }
     
@@ -82,7 +78,7 @@ contract Recycle is Authorised{
     // @notice controllo bag a partire dal qrcode ---usando il mapping
     // @parameter qrcheck: qrcode di cui si vuole sapere i suoi riferimenti
     // @return gli elementi che compongono la sua smart bag
-    function checkBagByQR_MAP(string calldata qrcheck) external view returns (string memory, string memory, uint32, string memory){
+    function checkBagByQR_MAP(string calldata qrcheck) external view returns (string memory, string memory, uint32, string memory) onlyAuthorised{
         require (qrcodeToBag[qrcheck] != 0, 'Il qrcode non è stato trattato');
         uint i = qrcodeToBag[qrcheck] -1;
         return (bags[i].qrcode, bags[i].timestamp, bags[i].time, bags[i].recyType);
