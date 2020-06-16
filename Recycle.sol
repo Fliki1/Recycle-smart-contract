@@ -10,7 +10,7 @@ import "./Authorised.sol";
 contract Recycle is Authorised{
     
     event NewBagTransaction(string qrcode, string timestamp, string recyType);
-    event  DelBagTransaction(string qrcode, uint index, uint bags_lenght);
+    event DelBagTransaction(string qrcode, uint index, uint bags_lenght);
 
     // @dev mapping che parte da 1, lo 0 è usato per indicare 'qr code non presente'. L'indice corrispettivo in bags è -1
     mapping (string => uint256) private qrcodeToBag;
@@ -37,9 +37,7 @@ contract Recycle is Authorised{
     function _createBag(string memory _qrcode, string memory _timestamp, string memory _recyType) internal {
         bags.push(SmartBag(_qrcode, _timestamp, uint32(now), _recyType));
         qrcodeToBag[_qrcode] = bags.length;
-
         emit NewBagTransaction(_qrcode, _timestamp, _recyType);
-        //ownerZombieCount[msg.sender]++;
     }
     
     // @notice genera una smart bag
@@ -47,10 +45,6 @@ contract Recycle is Authorised{
     // @parameter _timestamp: timestamp
     // @parameter _recyType: il tipo di recycle
     function generateBag(string memory _qrcode, string memory _timestamp, string memory _recyType) public onlyAuthorised(msg.sender){
-        // require che l'address sia di quelli a me consoni
-        //require(ownerZombieCount[msg.sender] == 0);
-        //uint randDna = _generateRandomDna(_name);
-        //randDna = randDna - randDna % 100;
         _createBag(_qrcode, _timestamp, _recyType);
     }
     
@@ -78,14 +72,11 @@ contract Recycle is Authorised{
         uint index = qrcodeToBag[qrcode] -1;
         emit DelBagTransaction(bags[index].qrcode, qrcodeToBag[qrcode], index);
 
-        if(bags.length == 1){ // se presente un solo elemento in bags
-            bags.pop();
-        }
-        else{
+        if(bags.length != 1){ // se presente più di un bags
             qrcodeToBag[bags[bags.length-1].qrcode] = qrcodeToBag[bags[index].qrcode];
             bags[index] = bags[bags.length-1];
-            bags.pop();
         }
+        bags.pop();
         delete qrcodeToBag[qrcode];
     }
 
