@@ -1,5 +1,5 @@
-pragma solidity >=0.5.11;
-
+pragma solidity >=0.6.6;
+pragma experimental ABIEncoderV2;
 
 import "./Authorised.sol";
 
@@ -78,6 +78,11 @@ contract Recycle is Authorised{
         }
         bags.pop();
         delete qrcodeToBag[qrcode];
+    }
+
+    // @dev funzione che ritorna tutti gli smartbags presenti (sarebbe meglio gestirlo diversamente in base ai casi: connect your contract with Web3(JS) or truffle console (test locali))
+    function getAllBags() view external onlyOwner returns(SmartBag[] memory) {
+        return bags;
     }
 
 

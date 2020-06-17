@@ -1,3 +1,5 @@
+//pragma solidity >=0.6.6;
+
 /**
  * @title Authorised
  * @dev The Authorised contract mantain the user/citizen address able to use the Recycle smart contract
