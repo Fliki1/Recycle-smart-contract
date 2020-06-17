@@ -88,8 +88,27 @@ contract Recycle is Authorised{
 
     // @notice distruzione del contratto
     // @dev solo l'owner può, farò un modifier apposito
-    function destroy() public onlyOwner{
+    function destroy() external onlyOwner{
         selfdestruct(msg.sender);    // si distrugge il contratto e si mandano gli ether suo presenti all'address del suo creatore (payable format)
+    }
+
+    // @notice solo l'owner può depositarvi ether all'interno
+    function deposit() external payable onlyOwner {
+
+    }
+
+    // @notice ritorna quanti ether sono presenti nel contratto
+    // @dev public e non external per essere invocato anche dal withdraw che ne fa un controllo nell'ether pool
+    function balanceOf() public view onlyOwner returns(uint){
+        return address(this).balance;
+    }
+
+    // @notice fornisce gli ether presenti nel contract all'owner
+    // @parameter withdra_amount ether che si vuole ritirare dallo smart contract
+    function withdraw(uint withdraw_amount) external onlyOwner {
+        // Limit withdrawal amount
+        require(withdraw_amount <= balanceOf());
+        msg.sender.transfer(withdraw_amount); // owner
     }
     
     // @notice accetto ether solo dall'owner
