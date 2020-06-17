@@ -11,6 +11,8 @@ contract Recycle is Authorised{
     
     event NewBagTransaction(string qrcode, string timestamp, string recyType);
     event DelBagTransaction(string qrcode, uint index, uint bags_lenght);
+    event Withdrawal(address indexed to, uint amount);
+    event Deposit(address indexed from, uint amount);
 
     // @dev mapping che parte da 1, lo 0 è usato per indicare 'qr code non presente'. L'indice corrispettivo in bags è -1
     mapping (string => uint256) private qrcodeToBag;
@@ -94,7 +96,7 @@ contract Recycle is Authorised{
 
     // @notice solo l'owner può depositarvi ether all'interno
     function deposit() external payable onlyOwner {
-
+        emit Deposit(msg.sender, msg.value);
     }
 
     // @notice ritorna quanti ether sono presenti nel contratto
@@ -107,8 +109,9 @@ contract Recycle is Authorised{
     // @parameter withdra_amount ether che si vuole ritirare dallo smart contract
     function withdraw(uint withdraw_amount) external onlyOwner {
         // Limit withdrawal amount
-        require(withdraw_amount <= balanceOf());
-        msg.sender.transfer(withdraw_amount); // owner
+        require(withdraw_amount <= balanceOf(), 'Insufficient balance for withdrawal request');
+        msg.sender.transfer(withdraw_amount); // dallo smart contract a msg.sender == owner
+        emit Withdrawal(msg.sender, withdraw_amount);
     }
     
     // @notice accetto ether solo dall'owner
