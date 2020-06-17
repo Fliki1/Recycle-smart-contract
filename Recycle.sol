@@ -87,7 +87,8 @@ contract Recycle is Authorised{
         selfdestruct(msg.sender);    // si distrugge il contratto e si mandano gli ether suo presenti all'address del suo creatore (payable format)
     }
     
-    // @notice accetto ether dall'esterno in ogni modo
-    receive () external payable {}
+    // @notice accetto ether solo dall'owner
+    // @dev mi permette di istanziare Ether già dal suo deploy
+    receive () external payable onlyOwner {}
 
 }
