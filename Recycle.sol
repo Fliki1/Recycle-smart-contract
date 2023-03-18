@@ -82,6 +82,10 @@ contract Recycle is Authorised{
         delete qrcodeToBag[qrcode];
     }
 
+    function deleteBag2(string calldata qrcode) external onlyOwner {
+        revert("Il qrcode non è stato trattato");
+    }
+
     // @dev funzione che ritorna tutti gli smartbags presenti (sarebbe meglio gestirlo diversamente in base ai casi: connect your contract with Web3(JS) or truffle console (test locali))
     function getAllBags() view external onlyOwner returns(SmartBag[] memory) {
         return bags;
