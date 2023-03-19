@@ -39,8 +39,8 @@ bag. In this way it is possible to store on a server in the
 waste truck the data collected by the electronic reader and
 the weighing scale.
 
-The smart contract, in addition to providing Token to reward
-users based on the amount of recycled material provided, to
+The smart contract provides Token to reward
+users based on the amount of recycled material, to
 use once the redeemable prize is reached.
 
 To validate the effectiveness of the smart contract, tests were carried out using the tool Truffle.
