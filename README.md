@@ -14,13 +14,13 @@ As recycling is properly handled by citizens, they can be rewarded with an adequ
 The data flow starts on the IoT side, when a QR-code has been scanned by waste collectors or
 citizens then new data, such as a collected waste bag, a request to collect a bag, etc. are gathered. Such data are passed to a smart contract on the Ethereum blockchain platform, which provides an unalterable data storage repository.
 
-![Screenshot](fig/provablockc.png)
+![Screenshot](fig/provablockc.jpg)
 
 The main data structure of the Recycle smart contract is the SmartBag struct representing the digital
 version of the recycle bag. Its main parts are: a QR-code, the
 delivery date and time of the bag, and the type of recycling.
 
-![Screenshot](fig/blockcScen.pdf)
+![Screenshot](fig/blockcScen.jpg)
 
 In our proposed system, the QR code contains a string of
 characters that allows the association between the user and
